@@ -1,0 +1,15 @@
+{
+  "tasks": {
+    "test": "deno test -RWE --allow-ffi --allow-run --allow-sys"
+  },
+  "compilerOptions": {
+    "types": ["node"]
+  },
+  "imports": {
+    "unplugin-license/esbuild": "../src/esbuild.ts",
+    "unplugin-license/rolldown": "../src/rolldown.ts",
+    "unplugin-license/rollup": "../src/rollup.ts",
+    "unplugin-license/rspack": "../src/rspack.ts"
+  },
+  "lint": false
+}

@@ -1,0 +1,26 @@
+{
+  "name": "unplugin-license",
+  "version": "0.1.0",
+  "description": "Collect OSS licenses from bundled files and output third party licenses",
+  "type": "module",
+  "license": "MIT-0",
+  "repository": "ryuapp/unplugin-license",
+  "exports": {
+    "./esbuild": "./src/esbuild.ts",
+    "./rolldown": "./src/rolldown.ts",
+    "./rollup": "./src/rollup.ts",
+    "./rspack": "./src/rspack.ts",
+    "./vite": "./src/vite.ts"
+  },
+  "dependencies": {
+    "unplugin": "^3.0.0"
+  },
+  "engines": {
+    "node": ">=22.22.0"
+  },
+  "sideEffects": false,
+  "files": [
+    "src",
+    "!src/**/*_test.ts"
+  ]
+}
