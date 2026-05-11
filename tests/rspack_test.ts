@@ -20,8 +20,9 @@ Deno.test({
       entry: path.join(testDir, "example.ts"),
       plugins: [license({ output: "NOTICE.md" })],
     });
-    compiler.outputFileSystem = createFsFromVolume(volume) as
-      typeof compiler.outputFileSystem;
+    compiler.outputFileSystem = createFsFromVolume(
+      volume,
+    ) as typeof compiler.outputFileSystem;
 
     const { promise, resolve, reject } = Promise.withResolvers<void>();
 
@@ -45,20 +46,25 @@ Deno.test({
         resolve();
       });
     });
-
     await promise;
 
     const dist = readVolumeFiles(volume, compiler.outputPath);
     const actual = dist.get("NOTICE.md");
     assert.ok(actual);
 
-    const expected = await readFile(path.join(testDir, "EXPECTED_NOTICE.md"), "utf8");
+    const expected = await readFile(
+      path.join(testDir, "EXPECTED_NOTICE.md"),
+      "utf8",
+    );
 
     assert.equal(actual, expected);
   },
 });
 
-function readVolumeFiles(volume: MemfsVolume, outputPath: string): Map<string, string> {
+function readVolumeFiles(
+  volume: MemfsVolume,
+  outputPath: string,
+): Map<string, string> {
   const fileNames = volume.readdirSync(outputPath) as string[];
 
   return new Map(
