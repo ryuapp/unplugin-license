@@ -46,7 +46,6 @@ Deno.test({
         resolve();
       });
     });
-
     await promise;
 
     const dist = readVolumeFiles(volume, compiler.outputPath);
