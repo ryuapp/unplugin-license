@@ -7,6 +7,7 @@
     "npm:enogu@0.7.0": "0.7.0",
     "npm:esbuild@0.27.2": "0.27.2",
     "npm:memfs@4.17.0": "4.17.0",
+    "npm:npm@11.14.1": "11.14.1",
     "npm:oxlint@1.63.0": "1.63.0",
     "npm:rolldown@1.0.0": "1.0.0",
     "npm:rollup@4.60.3": "4.60.3",
@@ -754,6 +755,10 @@
         "tslib"
       ]
     },
+    "npm@11.14.1": {
+      "integrity": "sha512-aopNZ0eEl6LbxoFcrXLmTEPzNBNxfiQnVgR9RmJBqzm+5h5pFoOmRljpRJbsXxocBeSl7GLcx3MoDf2UlEOjZw==",
+      "bin": true
+    },
     "oxlint@1.63.0": {
       "integrity": "sha512-9TGXetdjgIHOJ9OiReomP7nnrMkV9HxC1xM2ramJSLQpzxjsAJtQwa4wqkJN2f/uCrqZuJseFuSlWDdvcruveg==",
       "optionalDependencies": [
@@ -891,6 +896,7 @@
   "workspace": {
     "dependencies": [
       "npm:deno-test@1.0.3",
+      "npm:npm@11.14.1",
       "npm:oxlint@1.63.0"
     ],
     "packageJson": {

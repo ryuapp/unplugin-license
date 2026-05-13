@@ -6,13 +6,15 @@
     "lint:fix": "oxlint --fix",
     "check": "deno check --unstable-tsgo",
     "test": "deno test -A src/ tests/",
-    "test:node": "deno run -A scripts/node-test.ts"
+    "test:node": "deno run -A scripts/node-test.ts",
+    "publish": "npm publish"
   },
   "compilerOptions": {
     "types": ["node"]
   },
   "imports": {
     "deno-test": "npm:deno-test@1.0.3",
+    "npm": "npm:npm@11.14.1",
     "oxlint": "npm:oxlint@1.63.0"
   },
   "lint": false,
