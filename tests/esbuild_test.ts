@@ -1,6 +1,7 @@
 import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 import path from "node:path";
+import { assertSpyCall, assertSpyCalls, stub } from "jsr:@std/testing/mock";
 import * as esbuild from "esbuild";
 import license from "unplugin-license/esbuild";
 
@@ -11,6 +12,7 @@ Deno.test({
   async fn() {
     const testDir = import.meta.dirname;
     assert.ok(testDir);
+    const info = stub(console, "info");
 
     try {
       const result = await esbuild.build({
@@ -39,7 +41,12 @@ Deno.test({
       );
 
       assert.equal(actual, expected);
+      assertSpyCall(info, 0, {
+        args: ["[unplugin-license] Generated NOTICE.md."],
+      });
+      assertSpyCalls(info, 1);
     } finally {
+      info.restore();
       esbuild.stop();
     }
   },

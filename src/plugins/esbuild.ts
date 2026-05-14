@@ -3,6 +3,7 @@ import path from "node:path";
 import process from "node:process";
 import { renderLicenseFile } from "../utils/render.ts";
 import { collectLicensesFromModuleIds } from "../utils/collect.ts";
+import { logGeneratedNotice } from "../utils/log.ts";
 import type { ResolvedLicensePluginOptions } from "../utils/option.ts";
 
 interface EsbuildBuildOptions {
@@ -54,11 +55,13 @@ export function createEsbuildPlugin(options: ResolvedLicensePluginOptions) {
 
         if (result.outputFiles) {
           result.outputFiles.push(createOutputFile(outputPath, source));
+          logGeneratedNotice(undefined, options.output.file);
           return;
         }
 
         mkdirSync(path.dirname(outputPath), { recursive: true });
         writeFileSync(outputPath, source);
+        logGeneratedNotice(undefined, options.output.file);
       });
     },
   };

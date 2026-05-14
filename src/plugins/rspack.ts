@@ -2,9 +2,11 @@ import { mkdirSync, writeFileSync } from "node:fs";
 import path from "node:path";
 import { renderLicenseFile } from "../utils/render.ts";
 import { collectLicensesFromModuleIds } from "../utils/collect.ts";
+import { logGeneratedNotice } from "../utils/log.ts";
+import type { LoggerContext } from "../utils/log.ts";
 import type { ResolvedLicensePluginOptions } from "../utils/option.ts";
 
-interface EmitFileContext {
+interface EmitFileContext extends LoggerContext {
   emitFile(asset: { type: "asset"; fileName: string; source: string }): void;
 }
 
@@ -25,6 +27,7 @@ export function createRspackPlugin(options: ResolvedLicensePluginOptions) {
       if (path.isAbsolute(options.output.file)) {
         mkdirSync(path.dirname(options.output.file), { recursive: true });
         writeFileSync(options.output.file, source);
+        logGeneratedNotice(this, options.output.file);
         return;
       }
 
@@ -33,6 +36,7 @@ export function createRspackPlugin(options: ResolvedLicensePluginOptions) {
         fileName: options.output.file,
         source,
       });
+      logGeneratedNotice(this, options.output.file);
     },
   };
 }

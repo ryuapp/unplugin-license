@@ -3,9 +3,11 @@ import path from "node:path";
 import { renderLicenseFile } from "../utils/render.ts";
 import { collectLicensesFromBundle } from "../utils/collect.ts";
 import type { Bundle } from "../utils/collect.ts";
+import { logGeneratedNotice } from "../utils/log.ts";
+import type { LoggerContext } from "../utils/log.ts";
 import type { ResolvedLicensePluginOptions } from "../utils/option.ts";
 
-interface EmitFileContext {
+interface EmitFileContext extends LoggerContext {
   emitFile(asset: { type: "asset"; fileName: string; source: string }): void;
 }
 
@@ -22,6 +24,7 @@ export function createRollupPlugin(options: ResolvedLicensePluginOptions) {
       if (path.isAbsolute(options.output.file)) {
         mkdirSync(path.dirname(options.output.file), { recursive: true });
         writeFileSync(options.output.file, source);
+        logGeneratedNotice(this, options.output.file);
         return;
       }
 
@@ -30,6 +33,7 @@ export function createRollupPlugin(options: ResolvedLicensePluginOptions) {
         fileName: options.output.file,
         source,
       });
+      logGeneratedNotice(this, options.output.file);
     },
   };
 }
