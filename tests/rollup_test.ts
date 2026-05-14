@@ -17,7 +17,9 @@ Deno.test({
       plugins: [
         nodeResolve(),
         license({
-          output: "NOTICE.md",
+          output: {
+            file: "NOTICE.md",
+          },
         }),
       ],
     });

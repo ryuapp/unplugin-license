@@ -1,21 +1,30 @@
 export interface LicensePluginOptions {
   /**
-   * Generated asset file name.
-   *
-   * Relative paths are emitted as bundler assets.
-   * Absolute paths are written directly to the filesystem.
+   * Output options for generated license notice.
    */
-  output: string;
+  output: {
+    /**
+     * Generated asset file name.
+     *
+     * Relative paths are emitted as bundler assets.
+     * Absolute paths are written directly to the filesystem.
+     */
+    file: string;
+  };
 }
 
 export interface ResolvedLicensePluginOptions {
-  output: string;
+  output: {
+    file: string;
+  };
 }
 
 export function resolveOptions(
   options: LicensePluginOptions,
 ): ResolvedLicensePluginOptions {
   return {
-    output: options.output,
+    output: {
+      file: options.output.file,
+    },
   };
 }

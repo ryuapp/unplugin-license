@@ -15,7 +15,9 @@ Deno.test({
       input: entry,
       plugins: [
         license({
-          output: "NOTICE.md",
+          output: {
+            file: "NOTICE.md",
+          },
         }),
       ],
     });
