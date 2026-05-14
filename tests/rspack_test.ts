@@ -1,7 +1,9 @@
 import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 import path from "node:path";
+import { assertSpyCall, assertSpyCalls, stub } from "jsr:@std/testing/mock";
 import { rspack } from "@rspack/core";
+import type { Compiler } from "@rspack/core";
 import { createFsFromVolume, Volume } from "memfs";
 import license from "unplugin-license/rspack";
 
@@ -14,6 +16,7 @@ Deno.test({
     assert.ok(testDir);
 
     const volume = new Volume();
+    const info = stub(console, "info");
     const compiler = rspack({
       mode: "production",
       context: testDir,
@@ -24,42 +27,55 @@ Deno.test({
       volume,
     ) as typeof compiler.outputFileSystem;
 
-    const { promise, resolve, reject } = Promise.withResolvers<void>();
+    try {
+      await runCompiler(compiler);
 
-    compiler.run((error, stats) => {
-      compiler.close((closeError) => {
-        if (error) {
-          reject(error);
-          return;
-        }
+      const dist = readVolumeFiles(volume, compiler.outputPath);
+      const actual = dist.get("NOTICE.md");
+      assert.ok(actual);
 
-        if (closeError) {
-          reject(closeError);
-          return;
-        }
+      const expected = await readFile(
+        path.join(testDir, "EXPECTED_NOTICE.md"),
+        "utf8",
+      );
 
-        if (stats?.hasErrors()) {
-          reject(new Error(stats.toString(false)));
-          return;
-        }
-
-        resolve();
+      assert.equal(actual, expected);
+      assertSpyCall(info, 0, {
+        args: ["[unplugin-license] Generated NOTICE.md."],
       });
-    });
-    await promise;
-
-    const dist = readVolumeFiles(volume, compiler.outputPath);
-    const actual = dist.get("NOTICE.md");
-    assert.ok(actual);
-
-    const expected = await readFile(
-      path.join(testDir, "EXPECTED_NOTICE.md"),
-      "utf8",
-    );
-
-    assert.equal(actual, expected);
+      assertSpyCalls(info, 1);
+    } finally {
+      info.restore();
+    }
   },
 });
+
+function runCompiler(compiler: Compiler): Promise<void> {
+  const { promise, resolve, reject } = Promise.withResolvers<void>();
+
+  compiler.run((error, stats) => {
+    compiler.close((closeError) => {
+      if (error) {
+        reject(error);
+        return;
+      }
+
+      if (closeError) {
+        reject(closeError);
+        return;
+      }
+
+      if (stats?.hasErrors()) {
+        reject(new Error(stats.toString(false)));
+        return;
+      }
+
+      resolve();
+    });
+  });
+
+  return promise;
+}
 
 function readVolumeFiles(
   volume: MemfsVolume,

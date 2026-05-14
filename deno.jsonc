@@ -13,6 +13,7 @@
     "types": ["node"]
   },
   "imports": {
+    "@std/testing": "jsr:@std/testing@1.0.18",
     "deno-test": "npm:deno-test@1.0.3",
     "npm": "npm:npm@11.14.1",
     "oxlint": "npm:oxlint@1.63.0"
