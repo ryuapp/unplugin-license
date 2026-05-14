@@ -68,25 +68,25 @@ function resolveOutputPath(
   buildOptions: EsbuildBuildOptions,
   options: ResolvedLicensePluginOptions,
 ): string {
-  if (path.isAbsolute(options.output)) {
-    return options.output;
+  if (path.isAbsolute(options.output.file)) {
+    return options.output.file;
   }
 
   const workingDir = buildOptions.absWorkingDir ?? process.cwd();
 
   if (buildOptions.outdir) {
-    return path.resolve(workingDir, buildOptions.outdir, options.output);
+    return path.resolve(workingDir, buildOptions.outdir, options.output.file);
   }
 
   if (buildOptions.outfile) {
     return path.resolve(
       workingDir,
       path.dirname(buildOptions.outfile),
-      options.output,
+      options.output.file,
     );
   }
 
-  return path.resolve(workingDir, options.output);
+  return path.resolve(workingDir, options.output.file);
 }
 
 function createOutputFile(path: string, source: string): EsbuildOutputFile {

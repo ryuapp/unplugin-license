@@ -27,7 +27,9 @@ import license from "unplugin-license/rolldown";
 export default defineConfig({
   plugins: [
     license({
-      output: "NOTICE.md",
+      output: {
+        file: "NOTICE.md",
+      },
     }),
   ],
 });
@@ -42,7 +44,9 @@ import license from "unplugin-license/vite";
 export default defineConfig({
   plugins: [
     license({
-      output: "NOTICE.md",
+      output: {
+        file: "NOTICE.md",
+      },
     }),
   ],
 });

@@ -18,7 +18,7 @@ Deno.test({
       mode: "production",
       context: testDir,
       entry: path.join(testDir, "example.ts"),
-      plugins: [license({ output: "NOTICE.md" })],
+      plugins: [license({ output: { file: "NOTICE.md" } })],
     });
     compiler.outputFileSystem = createFsFromVolume(
       volume,

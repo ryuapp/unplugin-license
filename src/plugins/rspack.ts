@@ -22,15 +22,15 @@ export function createRspackPlugin(options: ResolvedLicensePluginOptions) {
       const entries = collectLicensesFromModuleIds(options, moduleIds);
       const source = renderLicenseFile(entries);
 
-      if (path.isAbsolute(options.output)) {
-        mkdirSync(path.dirname(options.output), { recursive: true });
-        writeFileSync(options.output, source);
+      if (path.isAbsolute(options.output.file)) {
+        mkdirSync(path.dirname(options.output.file), { recursive: true });
+        writeFileSync(options.output.file, source);
         return;
       }
 
       this.emitFile({
         type: "asset",
-        fileName: options.output,
+        fileName: options.output.file,
         source,
       });
     },

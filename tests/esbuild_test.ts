@@ -20,7 +20,9 @@ Deno.test({
         format: "esm",
         plugins: [
           license({
-            output: "NOTICE.md",
+            output: {
+              file: "NOTICE.md",
+            },
           }),
         ],
       });
