@@ -1,4 +1,3 @@
-import { assert, assertEquals } from "@std/assert";
 import { readFile } from "node:fs/promises";
 import path from "node:path";
 
@@ -6,7 +5,7 @@ const testName = "bun writes license output from bundled modules";
 const isBun = navigator.userAgent.startsWith("Bun/");
 
 if (isBun) {
-  const { afterEach, beforeEach, test } = await import("bun:test");
+  const { afterEach, beforeEach, expect, test } = await import("bun:test");
   let infoCalls: unknown[][] = [];
   let restoreInfo: (() => void) | undefined;
 
@@ -29,12 +28,12 @@ if (isBun) {
 
   test(testName, async () => {
     const testDir = import.meta.dirname;
-    assert(testDir);
+    expect(testDir).toBeDefined();
 
     const { default: license } = await import("../src/bun.ts");
 
     const result = await Bun.build({
-      entrypoints: [path.join(testDir, "example.ts")],
+      entrypoints: [path.join(testDir!, "example.ts")],
       plugins: [
         license({
           output: {
@@ -44,20 +43,20 @@ if (isBun) {
       ],
     });
 
-    assertEquals(result.success, true);
+    expect(result.success).toBe(true);
 
     const notice = result.outputs.find((file) =>
       path.basename(file.path) === "NOTICE.md"
     );
-    assert(notice);
+    expect(notice).toBeDefined();
 
-    const actual = await notice.text();
+    const actual = await notice!.text();
     const expected = await readFile(
-      path.join(testDir, "EXPECTED_NOTICE.md"),
+      path.join(testDir!, "EXPECTED_NOTICE.md"),
       "utf8",
     );
 
-    assertEquals(actual, expected);
-    assertEquals(infoCalls, [["[unplugin-license] Generated NOTICE.md."]]);
+    expect(actual).toBe(expected);
+    expect(infoCalls).toEqual([["[unplugin-license] Generated NOTICE.md."]]);
   });
 }
