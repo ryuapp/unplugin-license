@@ -1,11 +1,11 @@
-import assert from "node:assert/strict";
+import { assertEquals } from "@std/assert";
 import { renderLicenseFile } from "./render.ts";
 import type { LicenseEntry } from "./render.ts";
 
 Deno.test({
   name: "renders header without entries",
   fn() {
-    assert.equal(
+    assertEquals(
       renderLicenseFile([]),
       "# NOTICES AND INFORMATION\n\nThis project includes third-party licenses.\\\nPlease see the details below.\n",
     );
@@ -15,7 +15,7 @@ Deno.test({
 Deno.test({
   name: "renders package metadata",
   fn() {
-    assert.equal(
+    assertEquals(
       renderLicenseFile([
         entry({
           name: "alpha",
@@ -45,7 +45,7 @@ Deno.test({
 Deno.test({
   name: "renders license text as txt code block",
   fn() {
-    assert.equal(
+    assertEquals(
       renderLicenseFile([
         entry({
           name: "beta",
@@ -78,7 +78,7 @@ Deno.test({
 Deno.test({
   name: "separates multiple entries with a blank line",
   fn() {
-    assert.equal(
+    assertEquals(
       renderLicenseFile([
         entry({ name: "alpha", version: "1.0.0", license: "MIT" }),
         entry({ name: "beta", version: "2.0.0", license: "ISC" }),

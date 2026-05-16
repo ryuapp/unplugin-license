@@ -1,4 +1,4 @@
-import assert from "node:assert/strict";
+import { assert, assertEquals } from "@std/assert";
 import { readFile } from "node:fs/promises";
 import path from "node:path";
 import { assertSpyCall, assertSpyCalls, stub } from "jsr:@std/testing/mock";
@@ -10,7 +10,7 @@ Deno.test({
   name: "rollup emits license output from bundled modules",
   async fn() {
     const testDir = import.meta.dirname;
-    assert.ok(testDir);
+    assert(testDir);
     const entry = path.join(testDir, "example.ts");
     const info = stub(console, "info");
 
@@ -31,7 +31,7 @@ Deno.test({
       });
 
       const notice = output.find((file) => file.fileName === "NOTICE.md");
-      assert.equal(notice?.type, "asset");
+      assert(notice?.type === "asset");
 
       const actual = String(notice.source);
       const expected = await readFile(
@@ -39,7 +39,7 @@ Deno.test({
         "utf8",
       );
 
-      assert.equal(actual, expected);
+      assertEquals(actual, expected);
       assertSpyCall(info, 0, {
         args: ["[plugin unplugin-license] Generated NOTICE.md."],
       });
