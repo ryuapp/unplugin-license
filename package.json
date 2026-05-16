@@ -6,6 +6,7 @@
   "license": "MIT-0",
   "repository": "ryuapp/unplugin-license",
   "exports": {
+    "./bun": "./src/bun.ts",
     "./esbuild": "./src/esbuild.ts",
     "./rolldown": "./src/rolldown.ts",
     "./rollup": "./src/rollup.ts",

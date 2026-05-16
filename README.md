@@ -4,11 +4,12 @@ A plugin for [tsdown](https://tsdown.dev), [Vite](https://vite.dev), and other b
 
 Supported adapters:
 
-- [esbuild](https://esbuild.github.io): `unplugin-license/esbuild`
 - [Rolldown](https://rolldown.rs): `unplugin-license/rolldown`
 - [Rollup](https://rollupjs.org): `unplugin-license/rollup`
-- [Rspack](https://rspack.dev): `unplugin-license/rspack`
 - [Vite](https://vite.dev): `unplugin-license/vite`
+- [esbuild](https://esbuild.github.io): `unplugin-license/esbuild`
+- [Rspack](https://rspack.dev): `unplugin-license/rspack`
+- [Bun](https://bun.com): `unplugin-license/bun`
 
 ## Install
 
