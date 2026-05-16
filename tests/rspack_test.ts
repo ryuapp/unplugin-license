@@ -1,4 +1,4 @@
-import assert from "node:assert/strict";
+import { assert, assertEquals } from "@std/assert";
 import { readFile } from "node:fs/promises";
 import path from "node:path";
 import { assertSpyCall, assertSpyCalls, stub } from "jsr:@std/testing/mock";
@@ -13,7 +13,7 @@ Deno.test({
   name: "rspack emits license output from bundled modules",
   async fn() {
     const testDir = import.meta.dirname;
-    assert.ok(testDir);
+    assert(testDir);
 
     const volume = new Volume();
     const info = stub(console, "info");
@@ -32,14 +32,14 @@ Deno.test({
 
       const dist = readVolumeFiles(volume, compiler.outputPath);
       const actual = dist.get("NOTICE.md");
-      assert.ok(actual);
+      assert(actual);
 
       const expected = await readFile(
         path.join(testDir, "EXPECTED_NOTICE.md"),
         "utf8",
       );
 
-      assert.equal(actual, expected);
+      assertEquals(actual, expected);
       assertSpyCall(info, 0, {
         args: ["[unplugin-license] Generated NOTICE.md."],
       });

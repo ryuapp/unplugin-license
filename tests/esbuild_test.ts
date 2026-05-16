@@ -1,4 +1,4 @@
-import assert from "node:assert/strict";
+import { assert, assertEquals } from "@std/assert";
 import { readFile } from "node:fs/promises";
 import path from "node:path";
 import { assertSpyCall, assertSpyCalls, stub } from "jsr:@std/testing/mock";
@@ -11,7 +11,7 @@ Deno.test({
   sanitizeResources: false,
   async fn() {
     const testDir = import.meta.dirname;
-    assert.ok(testDir);
+    assert(testDir);
     const info = stub(console, "info");
 
     try {
@@ -32,7 +32,7 @@ Deno.test({
       const notice = result.outputFiles.find((file) =>
         path.basename(file.path) === "NOTICE.md"
       );
-      assert.ok(notice);
+      assert(notice);
 
       const actual = notice.text;
       const expected = await readFile(
@@ -40,7 +40,7 @@ Deno.test({
         "utf8",
       );
 
-      assert.equal(actual, expected);
+      assertEquals(actual, expected);
       assertSpyCall(info, 0, {
         args: ["[unplugin-license] Generated NOTICE.md."],
       });

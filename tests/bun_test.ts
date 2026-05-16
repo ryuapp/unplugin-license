@@ -1,4 +1,4 @@
-import assert from "node:assert/strict";
+import { assert, assertEquals } from "@std/assert";
 import { readFile } from "node:fs/promises";
 import path from "node:path";
 
@@ -29,7 +29,7 @@ if (isBun) {
 
   test(testName, async () => {
     const testDir = import.meta.dirname;
-    assert.ok(testDir);
+    assert(testDir);
 
     const { default: license } = await import("../src/bun.ts");
 
@@ -44,12 +44,12 @@ if (isBun) {
       ],
     });
 
-    assert.equal(result.success, true);
+    assertEquals(result.success, true);
 
     const notice = result.outputs.find((file) =>
       path.basename(file.path) === "NOTICE.md"
     );
-    assert.ok(notice);
+    assert(notice);
 
     const actual = await notice.text();
     const expected = await readFile(
@@ -57,7 +57,7 @@ if (isBun) {
       "utf8",
     );
 
-    assert.equal(actual, expected);
-    assert.deepEqual(infoCalls, [["[unplugin-license] Generated NOTICE.md."]]);
+    assertEquals(actual, expected);
+    assertEquals(infoCalls, [["[unplugin-license] Generated NOTICE.md."]]);
   });
 }
