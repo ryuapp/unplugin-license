@@ -6,14 +6,16 @@
     "lint:fix": "oxlint --fix",
     "check": "deno check --unstable-tsgo",
     "test": "deno test -A src/ tests/",
+    "test:bun": "bun test ./tests/bun_test.ts",
     "test:node": "deno run -A scripts/node-test.ts",
     "publish": "npm publish"
   },
   "compilerOptions": {
-    "types": ["node"]
+    "types": ["node", "bun-types"]
   },
   "imports": {
     "@std/testing": "jsr:@std/testing@1.0.18",
+    "bun-types": "npm:bun-types@1.3.3",
     "deno-test": "npm:deno-test@1.0.3",
     "npm": "npm:npm@11.14.1",
     "oxlint": "npm:oxlint@1.63.0"
