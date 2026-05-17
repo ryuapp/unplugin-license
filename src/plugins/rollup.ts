@@ -21,19 +21,19 @@ export function createRollupPlugin(options: ResolvedLicensePluginOptions) {
       const entries = collectLicensesFromBundle(options, bundle);
       const source = renderLicenseFile(entries);
 
-      if (path.isAbsolute(options.output.file)) {
-        mkdirSync(path.dirname(options.output.file), { recursive: true });
-        writeFileSync(options.output.file, source);
-        logGeneratedNotice(this, options.output.file);
+      if (options.output.type === "absolute") {
+        mkdirSync(path.dirname(options.output.path), { recursive: true });
+        writeFileSync(options.output.path, source);
+        logGeneratedNotice(this, options.output.path);
         return;
       }
 
       this.emitFile({
         type: "asset",
-        fileName: options.output.file,
+        fileName: options.output.path,
         source,
       });
-      logGeneratedNotice(this, options.output.file);
+      logGeneratedNotice(this, options.output.path);
     },
   };
 }

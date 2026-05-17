@@ -1,3 +1,4 @@
+import { mkdirSync, writeFileSync } from "node:fs";
 import path from "node:path";
 import process from "node:process";
 import { collectLicensesFromModuleIds } from "../utils/collect.ts";
@@ -40,10 +41,18 @@ export function createBunPlugin(
           Object.keys(result.metafile.inputs),
         );
         const source = renderLicenseFile(entries);
+
+        if (options.output.type === "absolute") {
+          mkdirSync(path.dirname(options.output.path), { recursive: true });
+          writeFileSync(options.output.path, source);
+          logGeneratedNotice(undefined, options.output.path);
+          return;
+        }
+
         const outputPath = resolveOutputPath(config, options);
 
         result.outputs.push(createOutputFile(outputPath, source));
-        logGeneratedNotice(undefined, options.output.file);
+        logGeneratedNotice(undefined, options.output.path);
       });
     },
   };
@@ -53,19 +62,15 @@ function resolveOutputPath(
   buildConfig: BunBuildConfig,
   options: ResolvedLicensePluginOptions,
 ): string {
-  if (path.isAbsolute(options.output.file)) {
-    return options.output.file;
-  }
-
   if (buildConfig.outdir) {
-    return path.resolve(buildConfig.outdir, options.output.file);
+    return path.resolve(buildConfig.outdir, options.output.path);
   }
 
   if (buildConfig.outfile) {
-    return path.resolve(path.dirname(buildConfig.outfile), options.output.file);
+    return path.resolve(path.dirname(buildConfig.outfile), options.output.path);
   }
 
-  return path.resolve(process.cwd(), options.output.file);
+  return path.resolve(process.cwd(), options.output.path);
 }
 
 function createOutputFile(path: string, source: string): Bun.BuildArtifact {

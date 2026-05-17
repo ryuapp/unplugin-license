@@ -1,3 +1,5 @@
+import { resolveOutputPath } from "./output-path.ts";
+
 export interface LicensePluginOptions {
   /**
    * Output options for generated license notice.
@@ -7,24 +9,32 @@ export interface LicensePluginOptions {
      * Generated asset file name.
      *
      * Relative paths are emitted as bundler assets.
-     * Absolute paths are written directly to the filesystem.
+     * File URLs are written directly to the filesystem.
+     *
+     * Use file URLs when specifying absolute output paths.
      */
     file: string;
   };
 }
 
 export interface ResolvedLicensePluginOptions {
-  output: {
-    file: string;
-  };
+  output:
+    | {
+      type: "relative";
+      path: string;
+    }
+    | {
+      type: "absolute";
+      path: string;
+    };
 }
 
 export function resolveOptions(
   options: LicensePluginOptions,
 ): ResolvedLicensePluginOptions {
+  const output = resolveOutputPath(options.output.file);
+
   return {
-    output: {
-      file: options.output.file,
-    },
+    output,
   };
 }

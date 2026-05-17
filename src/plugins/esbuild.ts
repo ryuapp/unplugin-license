@@ -55,13 +55,13 @@ export function createEsbuildPlugin(options: ResolvedLicensePluginOptions) {
 
         if (result.outputFiles) {
           result.outputFiles.push(createOutputFile(outputPath, source));
-          logGeneratedNotice(undefined, options.output.file);
+          logGeneratedNotice(undefined, options.output.path);
           return;
         }
 
         mkdirSync(path.dirname(outputPath), { recursive: true });
         writeFileSync(outputPath, source);
-        logGeneratedNotice(undefined, options.output.file);
+        logGeneratedNotice(undefined, options.output.path);
       });
     },
   };
@@ -71,25 +71,25 @@ function resolveOutputPath(
   buildOptions: EsbuildBuildOptions,
   options: ResolvedLicensePluginOptions,
 ): string {
-  if (path.isAbsolute(options.output.file)) {
-    return options.output.file;
+  if (options.output.type === "absolute") {
+    return options.output.path;
   }
 
   const workingDir = buildOptions.absWorkingDir ?? process.cwd();
 
   if (buildOptions.outdir) {
-    return path.resolve(workingDir, buildOptions.outdir, options.output.file);
+    return path.resolve(workingDir, buildOptions.outdir, options.output.path);
   }
 
   if (buildOptions.outfile) {
     return path.resolve(
       workingDir,
       path.dirname(buildOptions.outfile),
-      options.output.file,
+      options.output.path,
     );
   }
 
-  return path.resolve(workingDir, options.output.file);
+  return path.resolve(workingDir, options.output.path);
 }
 
 function createOutputFile(path: string, source: string): EsbuildOutputFile {
