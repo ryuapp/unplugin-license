@@ -5,26 +5,17 @@
 
 A plugin for [tsdown](https://tsdown.dev), [Vite](https://vite.dev), and other bundlers that collects OSS licenses from bundled files and outputs third-party licenses.
 
-Supported adapters:
-
-- [Rolldown](https://rolldown.rs): `unplugin-license/rolldown`
-- [Rollup](https://rollupjs.org): `unplugin-license/rollup`
-- [Vite](https://vite.dev): `unplugin-license/vite`
-- [esbuild](https://esbuild.github.io): `unplugin-license/esbuild`
-- [Rspack](https://rspack.dev): `unplugin-license/rspack`
-- [Bun](https://bun.com): `unplugin-license/bun`
-
 ## Install
 
 ```sh
 pnpm add -D unplugin-license
 ```
 
-## Usage
-
-### tsdown
+<details>
+<summary>tsdown</summary><br>
 
 ```ts
+// tsdown.config.ts
 import { defineConfig } from "tsdown";
 import License from "unplugin-license/rolldown";
 
@@ -39,9 +30,13 @@ export default defineConfig({
 });
 ```
 
-### Vite
+<br></details>
+
+<details>
+<summary>Vite</summary><br>
 
 ```ts
+// vite.config.ts
 import { defineConfig } from "vite";
 import License from "unplugin-license/vite";
 
@@ -55,6 +50,113 @@ export default defineConfig({
   ],
 });
 ```
+
+<br></details>
+
+<details>
+<summary>Rollup</summary><br>
+
+```ts
+// rollup.config.ts
+import License from "unplugin-license/rollup";
+
+export default {
+  plugins: [
+    License({
+      output: {
+        file: "NOTICE.md",
+      },
+    }),
+  ],
+};
+```
+
+<br></details>
+
+<details>
+<summary>Rolldown</summary><br>
+
+```ts
+// rolldown.config.ts
+import License from "unplugin-license/rolldown";
+
+export default {
+  plugins: [
+    License({
+      output: {
+        file: "NOTICE.md",
+      },
+    }),
+  ],
+};
+```
+
+<br></details>
+
+<details>
+<summary>Rspack</summary><br>
+
+```ts
+// rspack.config.ts
+import License from "unplugin-license/rspack";
+
+export default {
+  plugins: [
+    License({
+      output: {
+        file: "NOTICE.md",
+      },
+    }),
+  ],
+};
+```
+
+<br></details>
+
+<details>
+<summary>esbuild</summary><br>
+
+```ts
+// build.ts
+import { build } from "esbuild";
+import License from "unplugin-license/esbuild";
+
+await build({
+  entryPoints: ["src/index.ts"],
+  bundle: true,
+  plugins: [
+    License({
+      output: {
+        file: "NOTICE.md",
+      },
+    }),
+  ],
+});
+```
+
+<br></details>
+
+<details>
+<summary>Bun</summary><br>
+
+```ts
+// build.ts
+import License from "unplugin-license/bun";
+
+await Bun.build({
+  entrypoints: ["src/index.ts"],
+  outdir: "dist",
+  plugins: [
+    License({
+      output: {
+        file: "NOTICE.md",
+      },
+    }),
+  ],
+});
+```
+
+<br></details>
 
 ## Options
 
