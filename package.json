@@ -1,6 +1,6 @@
 {
   "name": "unplugin-license",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Collect OSS licenses from bundled files and output third party licenses",
   "type": "module",
   "license": "MIT-0",
