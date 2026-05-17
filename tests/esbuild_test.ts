@@ -22,6 +22,7 @@ Deno.test({
         bundle: true,
         write: false,
         format: "esm",
+        tsconfigRaw: {},
         plugins: [
           License({
             output: {
@@ -73,6 +74,7 @@ Deno.test({
         write: true,
         format: "esm",
         outfile: path.join(outputDir, "entry.js"),
+        tsconfigRaw: {},
         plugins: [
           License({
             output: {

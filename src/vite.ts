@@ -1,3 +1,1 @@
-import { plugin } from "./plugins/mod.ts";
-
-export default plugin.vite;
+export { default } from "./rollup.ts";

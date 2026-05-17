@@ -30,6 +30,8 @@ jobs:
         run: deno task test
       - name: TypeCheck
         run: deno task check
+      - name: Build
+        run: deno task build
 
       - name: Publish to npm
         run: deno task publish
