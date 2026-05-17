@@ -5,10 +5,10 @@ import path from "node:path";
 import { pathToFileURL } from "node:url";
 import { assertSpyCall, assertSpyCalls, stub } from "jsr:@std/testing/mock";
 import * as esbuild from "esbuild";
-import license from "unplugin-license/esbuild";
+import License from "unplugin-license/esbuild";
 
 Deno.test({
-  name: "esbuild writes license output from bundled modules",
+  name: "esbuild subpath export writes license output from bundled modules",
   sanitizeOps: false,
   sanitizeResources: false,
   async fn() {
@@ -23,7 +23,7 @@ Deno.test({
         write: false,
         format: "esm",
         plugins: [
-          license({
+          License({
             output: {
               file: "NOTICE.md",
             },
@@ -55,7 +55,7 @@ Deno.test({
 });
 
 Deno.test({
-  name: "esbuild writes license output to file URL",
+  name: "esbuild subpath export writes license output to file URL",
   sanitizeOps: false,
   sanitizeResources: false,
   async fn() {
@@ -74,7 +74,7 @@ Deno.test({
         format: "esm",
         outfile: path.join(outputDir, "entry.js"),
         plugins: [
-          license({
+          License({
             output: {
               file: outputUrl,
             },
