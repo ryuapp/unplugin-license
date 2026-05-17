@@ -1,5 +1,8 @@
 # unplugin-license
 
+[![License](https://img.shields.io/github/license/ryuapp/unplugin-license?labelColor=171717&color=39b54a&label=License)](https://github.com/ryuapp/unplugin-license/blob/main/LICENSE)
+[![npm](https://img.shields.io/npm/v/unplugin-license?labelColor=171717&color=39b54a)](https://npmx.dev/package/unplugin-license)
+
 A plugin for [tsdown](https://tsdown.dev), [Vite](https://vite.dev), and other bundlers that collects OSS licenses from bundled files and outputs third-party licenses.
 
 Supported adapters:
