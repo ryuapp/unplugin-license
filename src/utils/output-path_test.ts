@@ -1,4 +1,5 @@
 import { assertEquals, assertThrows } from "@std/assert";
+import os from "node:os";
 import path from "node:path";
 import { pathToFileURL } from "node:url";
 import { resolveOutputPath } from "./output-path.ts";
@@ -31,6 +32,18 @@ Deno.test({
   fn() {
     assertThrows(
       () => resolveOutputPath(path.resolve("NOTICE.md")),
+      TypeError,
+      "Absolute output.file paths are not supported.",
+    );
+  },
+});
+
+Deno.test({
+  name: "rejects windows drive absolute filesystem output file",
+  ignore: os.platform() !== "win32",
+  fn() {
+    assertThrows(
+      () => resolveOutputPath("C://project/NOTICE.md"),
       TypeError,
       "Absolute output.file paths are not supported.",
     );
