@@ -3,12 +3,5 @@
   "tasks": {
     "test": "deno test -RWE --allow-ffi --allow-run --allow-sys"
   },
-  "imports": {
-    "unplugin-license/esbuild": "../src/esbuild.ts",
-    "unplugin-license/bun": "../src/bun.ts",
-    "unplugin-license/rolldown": "../src/rolldown.ts",
-    "unplugin-license/rollup": "../src/rollup.ts",
-    "unplugin-license/rspack": "../src/rspack.ts"
-  },
   "lint": false
 }

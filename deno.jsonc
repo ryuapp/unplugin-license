@@ -8,9 +8,18 @@
     "lint": "oxlint",
     "lint:fix": "oxlint --fix",
     "check": "deno check --unstable-tsgo",
-    "test": "deno test -A src/ tests/ --parallel",
-    "test:bun": "bun test ./tests/bun_test.ts",
-    "test:node": "deno run -A scripts/node-test.ts",
+    "test": {
+      "dependencies": ["build"],
+      "command": "deno test -A src/ tests/ --parallel"
+    },
+    "test:bun": {
+      "dependencies": ["build"],
+      "command": "bun test ./tests/bun_test.ts"
+    },
+    "test:node": {
+      "dependencies": ["build"],
+      "command": "deno run -A scripts/node-test.ts"
+    },
     "publish": "npm publish"
   },
   "imports": {
