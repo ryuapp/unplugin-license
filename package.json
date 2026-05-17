@@ -6,7 +6,11 @@
   "license": "MIT-0",
   "repository": "ryuapp/unplugin-license",
   "keywords": [
-    "unplugin"
+    "unplugin",
+    "vite-plugin",
+    "rollup-plugin",
+    "rolldown-plugin",
+    "esbuild-plugin"
   ],
   "exports": {
     "./bun": "./src/bun.ts",
