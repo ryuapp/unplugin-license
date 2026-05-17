@@ -13,12 +13,12 @@
     "esbuild-plugin"
   ],
   "exports": {
-    "./bun": "./src/bun.ts",
-    "./esbuild": "./src/esbuild.ts",
-    "./rolldown": "./src/rolldown.ts",
-    "./rollup": "./src/rollup.ts",
-    "./rspack": "./src/rspack.ts",
-    "./vite": "./src/vite.ts"
+    "./bun": "./dist/bun.mjs",
+    "./esbuild": "./dist/esbuild.mjs",
+    "./rolldown": "./dist/rolldown.mjs",
+    "./rollup": "./dist/rollup.mjs",
+    "./rspack": "./dist/rspack.mjs",
+    "./vite": "./dist/vite.mjs"
   },
   "compatiblePackages": {
     "schemaVersion": 1,
@@ -35,15 +35,15 @@
       "versions": "^1.0.0"
     }
   },
-  "dependencies": {
-    "unplugin": "^3.0.0"
+  "devDependencies": {
+    "@typescript/native-preview": "7.0.0-dev.20260517.1",
+    "tsdown": "0.22.0"
   },
   "engines": {
     "node": ">=22.22.0"
   },
   "sideEffects": false,
   "files": [
-    "src",
-    "!src/**/*_test.ts"
+    "dist"
   ]
 }

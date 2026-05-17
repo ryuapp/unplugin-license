@@ -1,9 +1,7 @@
 {
+  "extends": "../tsconfig.json",
   "tasks": {
     "test": "deno test -RWE --allow-ffi --allow-run --allow-sys"
-  },
-  "compilerOptions": {
-    "types": ["node"]
   },
   "imports": {
     "unplugin-license/esbuild": "../src/esbuild.ts",
