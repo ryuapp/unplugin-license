@@ -3,7 +3,8 @@ import { tmpdir } from "node:os";
 import path from "node:path";
 import { pathToFileURL } from "node:url";
 
-const testName = "bun writes license output from bundled modules";
+const testName =
+  "bun subpath export writes license output from bundled modules";
 const isBun = navigator.userAgent.startsWith("Bun/");
 
 if (isBun) {
@@ -32,12 +33,12 @@ if (isBun) {
     const testDir = import.meta.dirname;
     expect(testDir).toBeDefined();
 
-    const { default: license } = await import("../src/bun.ts");
+    const { default: License } = await import("../src/bun.ts");
 
     const result = await Bun.build({
       entrypoints: [path.join(testDir!, "example.ts")],
       plugins: [
-        license({
+        License({
           output: {
             file: "NOTICE.md",
           },
@@ -62,21 +63,21 @@ if (isBun) {
     expect(infoCalls).toEqual([["[unplugin-license] Generated NOTICE.md."]]);
   });
 
-  test("bun writes license output to file URL", async () => {
+  test("bun subpath export writes license output to file URL", async () => {
     const testDir = import.meta.dirname;
     expect(testDir).toBeDefined();
 
     const outputDir = await mkdtemp(path.join(tmpdir(), "unplugin-license-"));
     const outputFile = path.join(outputDir, "NOTICE.md");
     const outputUrl = pathToFileURL(outputFile).href;
-    const { default: license } = await import("../src/bun.ts");
+    const { default: License } = await import("../src/bun.ts");
 
     try {
       const result = await Bun.build({
         entrypoints: [path.join(testDir!, "example.ts")],
         outdir: path.join(outputDir, "dist"),
         plugins: [
-          license({
+          License({
             output: {
               file: outputUrl,
             },

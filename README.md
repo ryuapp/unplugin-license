@@ -26,11 +26,11 @@ pnpm add -D unplugin-license
 
 ```ts
 import { defineConfig } from "tsdown";
-import license from "unplugin-license/rolldown";
+import License from "unplugin-license/rolldown";
 
 export default defineConfig({
   plugins: [
-    license({
+    License({
       output: {
         file: "NOTICE.md",
       },
@@ -43,11 +43,11 @@ export default defineConfig({
 
 ```ts
 import { defineConfig } from "vite";
-import license from "unplugin-license/vite";
+import License from "unplugin-license/vite";
 
 export default defineConfig({
   plugins: [
-    license({
+    License({
       output: {
         file: "NOTICE.md",
       },
@@ -65,7 +65,7 @@ The output path for the generated license notice.
 Relative paths are emitted as bundled assets:
 
 ```ts
-license({
+License({
   output: {
     file: "NOTICE.md",
   },
@@ -75,7 +75,7 @@ license({
 If you want to specify the output destination using an absolute path, please use a URL that follows the file protocol. For example:
 
 ```ts
-license({
+License({
   output: {
     file: import.meta.resolve("./NOTICE.md"), // file:///absolute/path/to/NOTICE.md
   },

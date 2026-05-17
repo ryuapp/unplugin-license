@@ -6,10 +6,10 @@ import { pathToFileURL } from "node:url";
 import { assertSpyCall, assertSpyCalls, stub } from "jsr:@std/testing/mock";
 import { nodeResolve } from "@rollup/plugin-node-resolve";
 import { rollup } from "rollup";
-import license from "unplugin-license/rollup";
+import License from "unplugin-license/rollup";
 
 Deno.test({
-  name: "rollup emits license output from bundled modules",
+  name: "rollup subpath export emits license output from bundled modules",
   async fn() {
     const testDir = import.meta.dirname;
     assert(testDir);
@@ -21,7 +21,7 @@ Deno.test({
         input: entry,
         plugins: [
           nodeResolve(),
-          license({
+          License({
             output: {
               file: "NOTICE.md",
             },
@@ -53,7 +53,7 @@ Deno.test({
 });
 
 Deno.test({
-  name: "rollup writes license output to file URL",
+  name: "rollup subpath export writes license output to file URL",
   async fn() {
     const testDir = import.meta.dirname;
     assert(testDir);
@@ -68,7 +68,7 @@ Deno.test({
         input: entry,
         plugins: [
           nodeResolve(),
-          license({
+          License({
             output: {
               file: outputUrl,
             },

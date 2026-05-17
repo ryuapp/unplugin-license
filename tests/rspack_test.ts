@@ -7,12 +7,12 @@ import { assertSpyCall, assertSpyCalls, stub } from "jsr:@std/testing/mock";
 import { rspack } from "@rspack/core";
 import type { Compiler } from "@rspack/core";
 import { createFsFromVolume, Volume } from "memfs";
-import license from "unplugin-license/rspack";
+import License from "unplugin-license/rspack";
 
 type MemfsVolume = InstanceType<typeof Volume>;
 
 Deno.test({
-  name: "rspack emits license output from bundled modules",
+  name: "rspack subpath export emits license output from bundled modules",
   async fn() {
     const testDir = import.meta.dirname;
     assert(testDir);
@@ -23,7 +23,7 @@ Deno.test({
       mode: "production",
       context: testDir,
       entry: path.join(testDir, "example.ts"),
-      plugins: [license({ output: { file: "NOTICE.md" } })],
+      plugins: [License({ output: { file: "NOTICE.md" } })],
     });
     compiler.outputFileSystem = createFsFromVolume(
       volume,
@@ -53,7 +53,7 @@ Deno.test({
 });
 
 Deno.test({
-  name: "rspack writes license output to file URL",
+  name: "rspack subpath export writes license output to file URL",
   async fn() {
     const testDir = import.meta.dirname;
     assert(testDir);
@@ -69,7 +69,7 @@ Deno.test({
       output: {
         path: path.join(outputDir, "dist"),
       },
-      plugins: [license({ output: { file: outputUrl } })],
+      plugins: [License({ output: { file: outputUrl } })],
     });
 
     try {
