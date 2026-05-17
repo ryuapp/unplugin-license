@@ -1,5 +1,7 @@
-import { readFile } from "node:fs/promises";
+import { mkdtemp, readFile, rm } from "node:fs/promises";
+import { tmpdir } from "node:os";
 import path from "node:path";
+import { pathToFileURL } from "node:url";
 
 const testName = "bun writes license output from bundled modules";
 const isBun = navigator.userAgent.startsWith("Bun/");
@@ -58,5 +60,44 @@ if (isBun) {
 
     expect(actual).toBe(expected);
     expect(infoCalls).toEqual([["[unplugin-license] Generated NOTICE.md."]]);
+  });
+
+  test("bun writes license output to file URL", async () => {
+    const testDir = import.meta.dirname;
+    expect(testDir).toBeDefined();
+
+    const outputDir = await mkdtemp(path.join(tmpdir(), "unplugin-license-"));
+    const outputFile = path.join(outputDir, "NOTICE.md");
+    const outputUrl = pathToFileURL(outputFile).href;
+    const { default: license } = await import("../src/bun.ts");
+
+    try {
+      const result = await Bun.build({
+        entrypoints: [path.join(testDir!, "example.ts")],
+        outdir: path.join(outputDir, "dist"),
+        plugins: [
+          license({
+            output: {
+              file: outputUrl,
+            },
+          }),
+        ],
+      });
+
+      expect(result.success).toBe(true);
+
+      const actual = await readFile(outputFile, "utf8");
+      const expected = await readFile(
+        path.join(testDir!, "EXPECTED_NOTICE.md"),
+        "utf8",
+      );
+
+      expect(actual).toBe(expected);
+      expect(infoCalls).toEqual([[
+        `[unplugin-license] Generated ${outputFile}.`,
+      ]]);
+    } finally {
+      await rm(outputDir, { recursive: true, force: true });
+    }
   });
 }

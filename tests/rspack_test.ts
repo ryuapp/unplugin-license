@@ -1,6 +1,8 @@
 import { assert, assertEquals } from "@std/assert";
-import { readFile } from "node:fs/promises";
+import { mkdtemp, readFile, rm } from "node:fs/promises";
+import { tmpdir } from "node:os";
 import path from "node:path";
+import { pathToFileURL } from "node:url";
 import { assertSpyCall, assertSpyCalls, stub } from "jsr:@std/testing/mock";
 import { rspack } from "@rspack/core";
 import type { Compiler } from "@rspack/core";
@@ -46,6 +48,47 @@ Deno.test({
       assertSpyCalls(info, 1);
     } finally {
       info.restore();
+    }
+  },
+});
+
+Deno.test({
+  name: "rspack writes license output to file URL",
+  async fn() {
+    const testDir = import.meta.dirname;
+    assert(testDir);
+
+    const outputDir = await mkdtemp(path.join(tmpdir(), "unplugin-license-"));
+    const outputFile = path.join(outputDir, "NOTICE.md");
+    const outputUrl = pathToFileURL(outputFile).href;
+    const info = stub(console, "info");
+    const compiler = rspack({
+      mode: "production",
+      context: testDir,
+      entry: path.join(testDir, "example.ts"),
+      output: {
+        path: path.join(outputDir, "dist"),
+      },
+      plugins: [license({ output: { file: outputUrl } })],
+    });
+
+    try {
+      await runCompiler(compiler);
+
+      const actual = await readFile(outputFile, "utf8");
+      const expected = await readFile(
+        path.join(testDir, "EXPECTED_NOTICE.md"),
+        "utf8",
+      );
+
+      assertEquals(actual, expected);
+      assertSpyCall(info, 0, {
+        args: [`[unplugin-license] Generated ${outputFile}.`],
+      });
+      assertSpyCalls(info, 1);
+    } finally {
+      info.restore();
+      await rm(outputDir, { recursive: true, force: true });
     }
   },
 });

@@ -56,6 +56,32 @@ export default defineConfig({
 });
 ```
 
+## Options
+
+### `output.file`
+
+The output path for the generated license notice.
+
+Relative paths are emitted as bundled assets:
+
+```ts
+license({
+  output: {
+    file: "NOTICE.md",
+  },
+});
+```
+
+If you want to specify the output destination using an absolute path, please use a URL that follows the file protocol. For example:
+
+```ts
+license({
+  output: {
+    file: import.meta.resolve("./NOTICE.md"), // file:///absolute/path/to/NOTICE.md
+  },
+});
+```
+
 ## Feedback
 
 Found a bug or have an idea for a new feature? [Please fill out an issue](https://github.com/ryuapp/unplugin-license/issues/new).
