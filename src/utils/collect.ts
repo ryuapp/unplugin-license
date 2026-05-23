@@ -9,9 +9,11 @@ interface PackageJson {
   private?: boolean;
   license?: string | { type?: string };
   licenses?: Array<string | { type?: string }>;
-  repository?: string | { url?: string };
+  repository?: Repository;
   homepage?: string;
 }
+
+export type Repository = string | { type?: string; url?: string };
 
 export type Bundle = Record<
   string,
@@ -19,7 +21,9 @@ export type Bundle = Record<
 >;
 
 const LICENSE_FILE_PATTERN = /^(licen[cs]e|notice)(\..*)?$/iu;
+const GITHUB_PROTOCOL_PREFIX_PATTERN = /^github:/u;
 const GITHUB_SHORTHAND_PATTERN = /^[^/\s]+\/[^/\s]+$/u;
+const GIT_PROTOCOL_PREFIX_PATTERN = /^git\+/u;
 
 export function collectLicensesFromBundle(
   options: ResolvedLicensePluginOptions,
@@ -147,22 +151,64 @@ function normalizeLicense(packageJson: PackageJson): string {
   return "UNKNOWN";
 }
 
-function normalizeRepository(
-  repository: PackageJson["repository"],
+export function normalizeRepository(
+  repository: Repository | undefined,
 ): string | undefined {
-  if (typeof repository === "string") {
-    return normalizeRepositoryUrl(repository);
+  if (!repository) {
+    return undefined;
   }
 
-  return repository?.url ? normalizeRepositoryUrl(repository.url) : undefined;
+  const url = typeof repository === "string"
+    ? repository.trim()
+    : repository.url?.trim();
+
+  if (!url) {
+    return undefined;
+  }
+
+  const githubShorthand = url.replace(GITHUB_PROTOCOL_PREFIX_PATTERN, "");
+
+  if (GITHUB_SHORTHAND_PATTERN.test(githubShorthand)) {
+    return `https://github.com/${githubShorthand}`;
+  }
+
+  const gitUrl = url.replace(GIT_PROTOCOL_PREFIX_PATTERN, "");
+  const githubUrl = normalizeGitHubUrl(gitUrl);
+
+  if (githubUrl) {
+    return githubUrl;
+  }
+
+  if (typeof repository === "string" || repository.type !== "git") {
+    return url;
+  }
+
+  return gitUrl;
 }
 
-function normalizeRepositoryUrl(repository: string): string {
-  if (GITHUB_SHORTHAND_PATTERN.test(repository)) {
-    return `https://github.com/${repository}`;
+function normalizeGitHubUrl(url: string): string | undefined {
+  let parsed: URL;
+
+  try {
+    parsed = new URL(url);
+  } catch {
+    return undefined;
   }
 
-  return repository;
+  if (parsed.hostname !== "github.com") {
+    return undefined;
+  }
+
+  const pathParts = parsed.pathname
+    .replace(/\.git$/u, "")
+    .split("/")
+    .filter(Boolean);
+
+  if (pathParts.length < 2) {
+    return undefined;
+  }
+
+  return `https://github.com/${pathParts[0]}/${pathParts[1]}`;
 }
 
 function readLicenseText(packageDir: string): string | undefined {
