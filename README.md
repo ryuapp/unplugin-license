@@ -114,6 +114,21 @@ export default {
 <br></details>
 
 <details>
+<summary>Rsbuild</summary><br>
+
+```ts
+// rsbuild.config.ts
+import { defineConfig } from "@rsbuild/core";
+import License from "unplugin-license/rsbuild";
+
+export default defineConfig({
+  plugins: [License({ output: { file: "NOTICE.md" } })],
+});
+```
+
+</details>
+
+<details>
 <summary>esbuild</summary><br>
 
 ```ts
