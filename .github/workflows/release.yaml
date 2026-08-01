@@ -37,6 +37,6 @@ jobs:
         run: deno task build
 
       - name: Version and publish packages
-        run: deno task tegami -- ci
+        run: deno task tegami ci
         env:
           GITHUB_TOKEN: ${{ github.token }}
