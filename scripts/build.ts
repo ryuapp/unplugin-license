@@ -8,6 +8,7 @@ await build({
     rolldown: "src/rolldown.ts",
     rollup: "src/rollup.ts",
     rspack: "src/rspack.ts",
+    rsbuild: "src/rsbuild.ts",
     vite: "src/vite.ts",
   },
   format: "esm",

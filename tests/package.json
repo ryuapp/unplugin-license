@@ -8,6 +8,7 @@
   "devDependencies": {
     "@rollup/plugin-node-resolve": "16.0.3",
     "@rspack/core": "2.0.2",
+    "@rsbuild/core": "2.1.9",
     "esbuild": "0.27.2",
     "memfs": "4.17.0",
     "rolldown": "1.0.0",

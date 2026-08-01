@@ -9,7 +9,7 @@ import type {
 } from "./utils/option.ts";
 import { renderLicenseFile } from "./utils/render.ts";
 
-interface RspackCompiler {
+export interface RspackCompiler {
   webpack: {
     sources: {
       RawSource: new (source: string) => unknown;
@@ -64,6 +64,13 @@ export default function plugin(options: LicensePluginOptions) {
       );
     },
   };
+}
+
+export function applyRspackPlugin(
+  compiler: RspackCompiler,
+  options: LicensePluginOptions,
+) {
+  plugin(options).apply(compiler);
 }
 
 function emitLicenseFile(
