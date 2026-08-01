@@ -8,6 +8,7 @@
     "lint": "oxlint",
     "lint:fix": "oxlint --fix",
     "check": "deno check --unstable-tsgo",
+    "check:pindeps": "pindeps --check --dev",
     "test": {
       "dependencies": ["build"],
       "command": "deno test -A src/ tests/ --parallel"
@@ -28,7 +29,8 @@
     "bun-types": "npm:bun-types@1.3.3",
     "deno-test": "npm:deno-test@1.0.3",
     "npm": "npm:npm@11.14.1",
-    "oxlint": "npm:oxlint@1.63.0"
+    "oxlint": "npm:oxlint@1.63.0",
+    "pindeps": "npm:pindeps@0.7.3"
   },
   "lint": false,
   "fmt": {
