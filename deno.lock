@@ -9,6 +9,7 @@
     "jsr:@std/internal@^1.0.12": "1.0.14",
     "jsr:@std/internal@^1.0.14": "1.0.14",
     "jsr:@std/path@^1.1.5": "1.1.6",
+    "jsr:@std/testing@*": "1.0.19",
     "jsr:@std/testing@1.0.19": "1.0.19",
     "npm:@rollup/plugin-node-resolve@16.0.3": "16.0.3_rollup@4.60.3",
     "npm:@rsbuild/core@2.1.9": "2.1.9",
@@ -25,6 +26,7 @@
     "npm:pindeps@0.7.3": "0.7.3",
     "npm:rolldown@1.0.0": "1.0.0",
     "npm:rollup@4.60.3": "4.60.3",
+    "npm:tegami@1.2.7": "1.2.7",
     "npm:tsdown@0.22.14": "0.22.14_typescript@7.0.2",
     "npm:typescript@7.0.2": "7.0.2",
     "npm:valibot@1.4.0": "1.4.0_typescript@7.0.2"
@@ -70,6 +72,22 @@
     }
   },
   "npm": {
+    "@clack/core@1.4.3": {
+      "integrity": "sha512-/kr3UWNtdJfxZtPgDqUOmG2pvwlmcLGheex5yiZKdwbzZJxhV+HMNR9QNmyY5cGwTNV6LrR7Jtp+KjhUAP1qBQ==",
+      "dependencies": [
+        "fast-wrap-ansi",
+        "sisteransi"
+      ]
+    },
+    "@clack/prompts@1.7.0": {
+      "integrity": "sha512-y7/yvZ2TPAnR9+jnc00klvNNLkJiXFFrQA/hlLCcxA9a2A4zQIOimyFQ9XfwYKiGD1fb5GY8vbKIIgO8d5Tb2A==",
+      "dependencies": [
+        "@clack/core",
+        "fast-string-width",
+        "fast-wrap-ansi",
+        "sisteransi"
+      ]
+    },
     "@deno/shim-deno-test@0.5.0": {
       "integrity": "sha512-4nMhecpGlPi0cSzT67L+Tm+GOJqvuk8gqHBziqcUQOarnuIax1z96/gJHCSIz2Z0zhxE6Rzwb3IZXPtFh51j+w=="
     },
@@ -446,6 +464,9 @@
       "dependencies": [
         "quansync"
       ]
+    },
+    "@rainbowatcher/toml-edit-js@0.6.5": {
+      "integrity": "sha512-EdALJyTDcp2yOxeVw1OJevOF7NZrlWAbVEnOnQBV7YqycVCI0OcpDy6oLUa8vqSvv2F1RmXW7kz1kgYv2A5h/w=="
     },
     "@rolldown/binding-android-arm64@1.0.0": {
       "integrity": "sha512-TWMZnRLMe63C2Lhyicviu7ZHaU4kxa6PS3rofvc9GmcvptzNN11BcfQ4Sl7MwTOsisQoa2keB/EBdNCAnUo8vA==",
@@ -1242,6 +1263,21 @@
     "estree-walker@2.0.2": {
       "integrity": "sha512-Rfkk/Mp/DL7JVje3u18FxFujQlTNR2q6QfMSMB7AvCBx91NGj/ba3kCfza0f6dVDbw7YlRf/nDrn7pQrCCyQ/w=="
     },
+    "fast-string-truncated-width@3.0.3": {
+      "integrity": "sha512-0jjjIEL6+0jag3l2XWWizO64/aZVtpiGE3t0Zgqxv0DPuxiMjvB3M24fCyhZUO4KomJQPj3LTSUnDP3GpdwC0g=="
+    },
+    "fast-string-width@3.0.2": {
+      "integrity": "sha512-gX8LrtNEI5hq8DVUfRQMbr5lpaS4nMIWV+7XEbXk2b8kiQIizgnlr12B4dA3ZEx3308ze0O4Q1R+cHts8kyUJg==",
+      "dependencies": [
+        "fast-string-truncated-width"
+      ]
+    },
+    "fast-wrap-ansi@0.2.2": {
+      "integrity": "sha512-7F2Fl+TjRSenLqlU3UjSH0iyqopqoZIu7eZVpEirP2g1GtWa2G/ecEmBdgz31+Mxr+ELclgg6sokpSFIQiZ02Q==",
+      "dependencies": [
+        "fast-string-width"
+      ]
+    },
     "fdir@6.5.0_picomatch@4.0.5": {
       "integrity": "sha512-tIbYtZbucOs0BRGqPJkshJUYdL+SDH7dVM8gjy+ERp3WAUjLEFJE+02kanyHtwjWOnwrKYBiwAmM0p4kLJAnXg==",
       "dependencies": [
@@ -1457,8 +1493,26 @@
       ],
       "bin": true
     },
+    "semver@7.8.5": {
+      "integrity": "sha512-Y7/KDsb8LjooZpwaqGyulO6DQlksgCncchHGk+sZIY4SBvUocMBEFH5Ur1fI4dV+Jvl0w6cjvucaIi40puRioA==",
+      "bin": true
+    },
+    "sisteransi@1.0.5": {
+      "integrity": "sha512-bLGGlR1QxBcynn2d5YmDX4MGjlZvy2MRBDRNHLJ8VI6l6+9FUiyTFNJ0IveOSP0bcXgVDPRcfGqA0pjaqUpfVg=="
+    },
     "supports-preserve-symlinks-flag@1.0.0": {
       "integrity": "sha512-ot0WnXS9fgdkgIcePe6RHNk1WA8+muPa6cSjeR3V8K27q9BB1rTE3R1p7Hv0z1ZyAc8s6Vvv8DIyWf681MAt0w=="
+    },
+    "tegami@1.2.7": {
+      "integrity": "sha512-8zF7G6btfIhVwPGHByAJVSJ3nQGsCk+5W5HBRDbkm8K5O4tSoDcBqoSOyzvF84jcBbC8Dj5sBYzBFeIke3CXnw==",
+      "dependencies": [
+        "@clack/prompts",
+        "@rainbowatcher/toml-edit-js",
+        "semver",
+        "tinyexec",
+        "tinyglobby",
+        "yaml"
+      ]
     },
     "thingies@2.6.0_tslib@2.8.1": {
       "integrity": "sha512-rMHRjmlFLM1R96UYPvpmnc3LYtdFrT33JIB7L9hetGue1qAPfn1N2LJeEjxUSidu1Iku+haLZXDuEXUHNGO/lg==",
@@ -1562,6 +1616,10 @@
     "verkit@0.3.1": {
       "integrity": "sha512-w2Eo8LSIIoW7qxNBzT7/17k+bh8plXo7G3dHjEIDqPlnluhzaxr9JX8F28VSYEtDvc1/a3WBDih6xNUZseebXg=="
     },
+    "yaml@2.9.0": {
+      "integrity": "sha512-2AvhNX3mb8zd6Zy7INTtSpl1F15HW6Wnqj0srWlkKLcpYl/gMIMJiyuGq2KeI2YFxUPjdlB+3Lc10seMLtL4cA==",
+      "bin": true
+    },
     "yuku-ast@0.8.1": {
       "integrity": "sha512-+k1E2f08y0k1+vpdD1KUCzDh2JXvwirMa8YR2Jr7VCS4zAo3eT5A/HbJCqaVGd6idaPY0gwLM9C4seEY4h10Hw==",
       "dependencies": [
@@ -1616,7 +1674,8 @@
       "npm:deno-test@1.0.3",
       "npm:npm@12.0.2",
       "npm:oxlint@1.76.0",
-      "npm:pindeps@0.7.3"
+      "npm:pindeps@0.7.3",
+      "npm:tegami@1.2.7"
     ],
     "packageJson": {
       "dependencies": [
