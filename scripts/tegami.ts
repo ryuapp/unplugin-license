@@ -14,6 +14,13 @@ const paper = tegami({
       repo: "ryuapp/unplugin-license",
       versionPr: {
         base: "main",
+        commit({ type }) {
+          if (type === "version-packages") {
+            return {
+              title: "chore(release): version packages",
+            };
+          }
+        },
         create() {
           return {
             title: "chore(release): version packages",
