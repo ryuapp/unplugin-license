@@ -1,0 +1,11 @@
+core:changelogs:
+  - content: "---\npackages:\n  npm:unplugin-license:\n    type: minor\n---\n\n## Add Rsbuild support\n\nAdd an Rsbuild plugin entry point alongside the existing bundler integrations.\n"
+    filename: 2026-08-08-v020.md
+    v: 0.0.0
+core:packages:
+  - changelogIds:
+      - 2026-08-08-v020.md
+    id: npm:unplugin-license
+    updated: true
+npm:packages:
+  - id: npm:unplugin-license
