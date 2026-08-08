@@ -37,6 +37,7 @@
   },
   "lint": false,
   "fmt": {
-    "proseWrap": "preserve"
+    "proseWrap": "preserve",
+    "useBraces": "always"
   }
 }
